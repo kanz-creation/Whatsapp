@@ -1,7 +1,13 @@
 import React from 'react';
 import './Chat.css';
 import { Avatar, IconButton } from '@material-ui/core';
-import { MoreVert, SearchOutlined, AttachFile } from '@material-ui/icons';
+import {
+  MoreVert,
+  SearchOutlined,
+  AttachFile,
+  InsertEmoticon,
+  Mic,
+} from '@material-ui/icons';
 
 function Chat() {
   return (
@@ -23,6 +29,35 @@ function Chat() {
             <MoreVert />
           </IconButton>
         </div>
+      </div>
+
+      <div className="chat__body">
+        <p className="chat__message">
+          <span className="chat__name">Kaneez</span>
+          Sounds like a you problem.
+          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
+        </p>
+
+        <p className="chat__message chat__reciever">
+          <span className="chat__name">Sara</span>
+          Please stop saying the same phrase
+          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
+        </p>
+
+        <p className="chat__message">
+          <span className="chat__name">Kaneez</span>
+          Please stop the constant bickering!
+          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
+        </p>
+      </div>
+
+      <div className="chat__footer">
+        <InsertEmoticon />
+        <form>
+          <input type="text" placeholder="Type a message." />
+          <button> Send a Message </button>
+        </form>
+        <Mic />
       </div>
     </div>
   );
