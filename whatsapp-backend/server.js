@@ -1,17 +1,36 @@
 // importing
 import express from 'express';
+import mongoose from 'mongoose';
+import Messages from './dbMessages.js';
 
 // app-config
 const app = express();
 const port = process.env.PORT || 9000;
+
 //middleware
+app.use(express.json());
+// db config
+const connection_url =
+  'mongodb+srv://admin:o161Fye3GBWVmmSd@cluster0.kspsl.mongodb.net/whatsappdb?retryWrites=true&w=majority';
 
-// db
-
-//???
-
-//api routes
+mongoose.connect(connection_url, async (err) => {
+  if (err) throw err;
+  console.log('conncted to db');
+});
+// api routes
 app.get('/', (req, res) => res.status(200).send('hello world'));
 
-//listn
+app.post('/messages/new', (req, res) => {
+  const dbMessage = req.body;
+  Messages.create(dbMessage, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(data);
+    }
+  });
+});
+
+// listen
+
 app.listen(port, () => console.log(`Listening on localhost:${port}`));
