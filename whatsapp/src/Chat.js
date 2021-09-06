@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Chat.css';
 import { Avatar, IconButton } from '@material-ui/core';
 import {
@@ -8,8 +8,23 @@ import {
   InsertEmoticon,
   Mic,
 } from '@material-ui/icons';
+import axios from './axios';
 
-function Chat() {
+const Chat = ({ messages }) => {
+  const [input, setInput] = useState('');
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    await axios.post('/messages/new', {
+      message: input,
+      name: 'Kaneez',
+      timestamp: 'Just now!',
+      received: false,
+    });
+
+    setInput('');
+  };
+
   return (
     <div className="chat">
       <div className="chat__header">
@@ -32,35 +47,40 @@ function Chat() {
       </div>
 
       <div className="chat__body">
-        <p className="chat__message">
-          <span className="chat__name">Kaneez</span>
-          Sounds like a you problem.
-          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
-        </p>
-
-        <p className="chat__message chat__reciever">
-          <span className="chat__name">Sara</span>
-          Please stop saying the same phrase
-          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
-        </p>
-
-        <p className="chat__message">
-          <span className="chat__name">Kaneez</span>
-          Please stop the constant bickering!
-          <span className="chat__timestamp ">{new Date().toUTCString()}</span>
-        </p>
+        {messages.map((message) => {
+          return (
+            <p
+              className={`chat__message ${
+                message.received && 'chat__reciever'
+              }`}
+            >
+              <span className="chat__name">{message.name}</span>
+              {message.message}
+              <span className="chat__timestamp">{message.timestamp}</span>
+            </p>
+          );
+        })}
       </div>
 
       <div className="chat__footer">
         <InsertEmoticon />
         <form>
-          <input type="text" placeholder="Type a message." />
-          <button> Send a Message </button>
+          <input
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
+            type="text"
+            placeholder="Type a message."
+          />
+          <button onClick={sendMessage} type="submit">
+            Send a Message
+          </button>
         </form>
         <Mic />
       </div>
     </div>
   );
-}
+};
 
 export default Chat;
