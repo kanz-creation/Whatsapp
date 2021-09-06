@@ -5,7 +5,9 @@ In the front end folder, we can see that the front end was bootstrapped with cre
 
 In the back end folder, I have used Express, Node and MongoDB. I have also used Pusher to update the database in real time. All previous messages are loaded into the chatroom, and the user can send any message. 
 
-Steps to run the application:
+To see preview of the project, please visit the pdf file attached. 
+
+#Steps to run the application
 
   Frontend: 
   - cd whatapp 
